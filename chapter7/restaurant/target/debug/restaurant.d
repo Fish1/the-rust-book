@@ -1,0 +1,1 @@
+/home/jacob/Source/the-rust-book/chapter7/restaurant/target/debug/restaurant: /home/jacob/Source/the-rust-book/chapter7/restaurant/src/lib.rs /home/jacob/Source/the-rust-book/chapter7/restaurant/src/main.rs
