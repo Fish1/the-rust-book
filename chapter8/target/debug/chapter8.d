@@ -1,0 +1,1 @@
+/home/jacob/Source/the-rust-book/chapter8/target/debug/chapter8: /home/jacob/Source/the-rust-book/chapter8/src/collections/vectors.rs /home/jacob/Source/the-rust-book/chapter8/src/collections.rs /home/jacob/Source/the-rust-book/chapter8/src/lib.rs /home/jacob/Source/the-rust-book/chapter8/src/main.rs
