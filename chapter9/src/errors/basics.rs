@@ -4,6 +4,10 @@ use std::fs::File;
 use std::io::{ErrorKind, Read};
 use std::io;
 
+use crate::errors::guess;
+
+use super::guess::Guess;
+
 pub fn open_file() {
   let file_result = File::open("hello.txt");
 
@@ -68,4 +72,18 @@ pub fn propogate_shorthand() -> Result<String, io::Error> {
   let mut username = String::new();
   file.read_to_string(&mut username)?;
   Ok(username)
+}
+
+pub fn propogate_test(index: usize) -> Option<i32> {
+  let myvec = vec![1, 2, 3];
+  let value = myvec.get(index)?;
+  println!("no propogate");
+  Some(value * 5)
+}
+
+pub fn testing_guess() {
+  let myguess = Guess::new(34);
+  println!("guess = {}", myguess.value());
+  let myguess = Guess::new(500);
+  println!("guess = {}", myguess.value());
 }

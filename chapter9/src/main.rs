@@ -17,4 +17,18 @@ fn main() {
 
     let username2 = errors::basics::propogate_shorthand().expect("the propogate shorthand failed!!!");
     println!("username = {}", username2);
+
+    let z = errors::basics::propogate_test(1);
+    match z {
+        Some(v) => println!("Found!!! {}", v),
+        None => println!("NONEEEE")
+    }
+
+    let y = errors::basics::propogate_test(100);
+    match y {
+        Some(v) => println!("FOUND!! {}", v),
+        None => println!("Proppogateeee")
+    }
+
+    errors::basics::testing_guess();
 }

@@ -78,4 +78,21 @@ pub fn enums() {
       Cell::Text(value) => println!("{}", value)
     }
   }
+
+  enum MyThing {
+    Data1(String),
+    Data2(i32),
+  }
+
+  let v2 = vec![
+    MyThing::Data1(String::from("Hellooo")),
+    MyThing::Data2(2345)
+  ];
+
+  for x in v2 {
+    match x {
+      MyThing::Data1(_value) => println!("This is a string"),
+      MyThing::Data2(_value) => println!("This is a number")
+    }
+  }
 }
