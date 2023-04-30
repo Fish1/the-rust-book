@@ -1,24 +1,39 @@
 fn main() {
     use List::Cons;
     use List::Nil;
+    use std::rc::Rc;
 
     println!("Hello, world!");
 
     let b = Box::new(5);
     println!("b = {}", b);
 
-    let my_list = Cons(
-        1, Box::new(
+    let my_list = Rc::new(Cons(
+        1, Rc::new(
             Cons(
-                2, Box::new(
-                    Cons(3, Box::new(Nil))
+                2, Rc::new(
+                    Cons(3, Rc::new(Nil))
                 )
             )
         )
-    );
+    ));
 
     println!("my_list = {:?}", my_list);
 
+    let my_list_2 = Cons(3, Rc::clone(&my_list));
+    println!("my_list count = {}", Rc::strong_count(&my_list));
+    let my_list_3 = Cons(4, Rc::clone(&my_list));
+    println!("my_list count = {}", Rc::strong_count(&my_list));
+
+    println!("my_list_2 = {:?}", my_list_2);
+    println!("my_list_3 = {:?}", my_list_3);
+
+
+    {
+        let my_list_4 = Cons(5, Rc::clone(&my_list));
+        println!("my_list count = {}", Rc::strong_count(&my_list));
+    }
+    println!("my_list count = {}", Rc::strong_count(&my_list));
 
     let x = 5;
     let y = Box::new(x);
@@ -26,7 +41,19 @@ fn main() {
     println!("y = {}", *y);
 
     let my_y = MyBox::new(x);
-    println!("my_y = {}", *my_y);
+    my_coersion_test(&my_y);
+
+    let mut my_smart_pointer = MySmartPointer {
+        data: 123.456,
+    };
+
+    let my_smart_pointer_2 = MySmartPointer {
+        data: 789.123,
+    };
+
+    drop(my_smart_pointer);
+
+    println!("Early drop...");
 
     let point_x = Point {
         x: 3, y: 2
@@ -36,10 +63,13 @@ fn main() {
     };
     let point_z = point_x + point_y;
     println!("point_z = {:?}", point_z);
-}
 
-struct Cons {
+    let x = Rc::new(55);
+    let z = Rc::clone(&x);
+    let y = RefCell<i32>(5);
 
+    println!("x = {}", x);
+    println!("z = {}", z);
 }
 
 // this is a recurssive definition
@@ -62,7 +92,7 @@ enum List {
 enum List {
     Cons (
         i32,
-        Box<List>
+        std::rc::Rc<List>
     ),
     Nil
 }
@@ -81,6 +111,20 @@ impl<T> std::ops::Deref for MyBox<T> {
     fn deref(&self) -> &Self::Target {
         &self.0
     }
+}
+
+struct MySmartPointer {
+    data: f64
+}
+
+impl Drop for MySmartPointer {
+    fn drop(&mut self) {
+        println!("Dropped!!! {}", self.data);
+    }
+}
+
+fn my_coersion_test(x: &i32) {
+    println!("you passed an i32 of {x}");
 }
 
 #[derive(Debug)]
