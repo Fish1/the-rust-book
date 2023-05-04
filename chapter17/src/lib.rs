@@ -1,3 +1,8 @@
+pub mod gui;
+pub mod mystate;
+pub mod post;
+pub mod better_post;
+
 pub struct AveragedCollection {
     list: Vec<i32>,
     average: f64,

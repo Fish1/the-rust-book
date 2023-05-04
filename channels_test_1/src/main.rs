@@ -9,7 +9,7 @@ fn main() {
     let (tx, rx) = mpsc::channel();
     let tx1 = tx.clone();
 
-    thread::spawn(move || {
+    let x = thread::spawn(move || {
         // let val = String::from("hi from transmitter");
         for i in 1..10 {
             thread::sleep(Duration::from_millis(100));
