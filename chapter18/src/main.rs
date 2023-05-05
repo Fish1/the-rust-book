@@ -159,7 +159,6 @@ fn main() {
     }
 
     let msg = Message::ChangeColor(Color::Hsv(4, 6, 9));
-
     match msg {
         Message::Quit => println!("quit match!"),
         Message::ChangeColor(Color::Rgb(r,g,b)) => println!("RGB {r} {g} {b}"),
@@ -167,4 +166,102 @@ fn main() {
         Message::Write(str) => println!("write match, {str}"),
     }
 
+    let ((feet, inches), Point {x, y}) = ((10, 20), Point { x: 7, y: 10 });
+    println!("feet = {feet}, inches = {inches}");
+    println!("x = {x}, y = {y}");
+
+    // we can ignore matches with the _
+    let (_, y) = (1, 2);
+    println!("y = {y}");
+    
+    fn do_stuff(_: i32, y: i32) {
+        println!("y = {y}");
+    }
+    do_stuff(3, 5);
+
+    let setting = Some(5);
+    let new_setting = Some(10);
+    match (setting, new_setting) {
+        (Some(_), Some(_)) => {
+            println!("cannot have two Somes")
+        },
+        _ => {
+            println!("Settings changed!")
+        }
+    }
+
+    let s = Some(String::from("my thing"));
+    if let Some(_x) = s {
+        println!("found a string!!!");
+    }
+    // we cannot use s here becuase it was
+    // moved into Some(_x)
+    // println!("s = {:?}", s);
+    
+    let s2 = Some(String::from("my thing 2"));
+    if let Some(_) = s2 {
+        println!("found a string!!!");
+    }
+    // we can use s2 here because we never bound it
+    // to another variable
+    println!("s2 = {:?}", s2);
+
+
+    struct Point3D {
+        x: i32,
+        y: i32,
+        z: i32,
+        w: i32
+    }
+
+    // we can use .. to ignore the remaing of the match
+    let p = Point3D { x: 5, y: 7, z: 5, w: 7 };
+    match p {
+        Point3D { x, z, .. } => {
+            println!("x = {x}, z = {z}")
+        }
+    }
+
+    let list = (1,2,3,4,5);
+    match list {
+        (a,b,..,e) => {
+            println!("{a} {b} {e}");
+        }
+    }
+
+    let num = Some(4);
+    match num {
+        Some(x) if x != 4 => println!("X is NOT 4"),
+        Some(_) => println!("X is 4"),
+        _ => ()
+    }
+
+    let x = 4;
+    let y = false;
+    match x {
+        4 | 5 | 6 if y => println!("yes"),
+        _ => println!("no")
+    }
+
+    enum Message2 {
+        Hello { id: i32 }
+    }
+
+    let msg = Message2::Hello {
+        id: 5
+    };
+
+    match msg {
+        Message2::Hello {
+            id: id_variable @ 3..=7 ,
+        } => {
+            println!("id = {id_variable}")
+        },
+        Message2::Hello {
+            id: 10..=12
+        } => {
+            println!("found in another range");
+        },
+        _ => ()
+    }
 }
